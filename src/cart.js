@@ -57,8 +57,23 @@ function calculateCartSubtotal(cart) {
   );
 }
 
-function calculateOrderTotal() {
-  return notImplemented();
+function calculateOrderTotal(cart, promo) {
+  const subtotal = calculateCartSubtotal(cart);
+
+  let discount = 0;
+  let delivery = 30000;
+
+  if (promo === "SAVE10" && subtotal >= 20000) {
+    discount = Math.round(subtotal * 0.1);
+  }
+
+  if (subtotal >= 50000 || subtotal === 0) {
+    delivery = 0;
+  }
+
+  const total = subtotal - discount + delivery;
+
+  return {subtotal: subtotal, discount: discount, delivery: delivery, total: total};
 }
 
 const cartApi = {
